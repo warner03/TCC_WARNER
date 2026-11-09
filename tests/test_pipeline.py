@@ -56,13 +56,16 @@ def test_training_features_are_pregame():
     assert dataset.iloc[1].Saldo_Gols_Ult_5_A == 2
 
 
-def test_same_day_examples_use_same_prior_state():
+def test_historical_same_day_reproduces_original_sequential_calculation():
     games = pd.DataFrame([
         [pd.Timestamp('2026-06-10'), "A", "B", 2, 0, "Friendly", True],
         [pd.Timestamp('2026-06-10'), "A", "C", 1, 0, "Friendly", True],
     ], columns=fixtures().columns)
     ds = generate_training_data(games, "2026-01-01")
-    assert ds.iloc[0].Elo_A_Pre_Jogo == ds.iloc[1].Elo_A_Pre_Jogo == 1500
+    assert ds.iloc[0].Elo_A_Pre_Jogo == 1500
+    assert ds.iloc[1].Elo_A_Pre_Jogo == 1510
+    # A base de dados original do autor foi montada linha a linha;
+    # o replay da Copa, diferentemente, não utiliza outros jogos do mesmo dia.
 
 
 def test_monte_carlo_probabilities_sum_one():

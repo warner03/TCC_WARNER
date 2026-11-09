@@ -49,7 +49,20 @@ def load_matches(path: str | Path, former_names: str | Path | None = None) -> pd
         for col in ("home_team", "away_team"):
             df[col] = df[col].replace(aliases)
     df["date"] = pd.to_datetime(df["date"], errors="raise").dt.normalize()
-    df = df.loc[~(df.home_team.isin(UNOFFICIAL) | df.away_team.isin(UNOFFICIAL))].copy()
+    if (df["home_score"].isna() != df["away_score"].isna()).any():
+        raise ValueError("Partida com apenas um placar preenchido")
+    # IMPORTANTE: o arquivo base_de_dadosTCC.csv entregue pelo autor foi
+    # produzido com dois sort_values padrão (quicksort), após remover partidas
+    # futuras/sem placar e depois de excluir 5 seleções não oficiais. Isso
+    # define a ordem de jogos do MESMO dia e altera o Elo. Reproduzimos essa
+    # ordem exata, sem modificar a base de treino recebida.
+    valid = df[df.home_score.notna() & df.away_score.notna()].copy()
+    future = df[df.home_score.isna() & df.away_score.isna()].copy()
+    valid = valid.sort_values("date").reset_index(drop=True)
+    valid = valid.loc[~(valid.home_team.isin(UNOFFICIAL) | valid.away_team.isin(UNOFFICIAL))]
+    valid = valid.sort_values("date").reset_index(drop=True)
+    future = future.loc[~(future.home_team.isin(UNOFFICIAL) | future.away_team.isin(UNOFFICIAL))]
+    df = pd.concat([valid, future], ignore_index=True).sort_values("date", kind="stable").reset_index(drop=True)
     for col in ("home_score", "away_score"):
         df[col] = pd.to_numeric(df[col], errors="coerce")
     if (df["home_score"].notna() != df["away_score"].notna()).any():
@@ -136,6 +149,29 @@ class RealMatchState:
             sum(a.gd), sum(b.gd),
         ]))
 
+    def apply_single(self, game) -> None:
+        """Atualiza uma partida real; reproduz a ordem do código original do TCC.
+
+        Usado no histórico 1872–2026, no qual os exemplos da base enviada
+        foram calculados sequencialmente em ordem estável de (data, linha).
+        """
+        if pd.isna(game.home_score) or pd.isna(game.away_score):
+            return
+        a, b = game.home_team, game.away_team
+        ta, tb = self.teams[a], self.teams[b]
+        expected = 1 / (1 + 10 ** ((tb.elo - ta.elo) / 400))
+        result = 1.0 if game.home_score > game.away_score else (.5 if game.home_score == game.away_score else 0.)
+        delta = self.k * tournament_weight(game.tournament) * (result - expected)
+        ta.elo += delta; tb.elo -= delta
+        ta.points.append(3 if result == 1 else 1 if result == .5 else 0)
+        tb.points.append(3 if result == 0 else 1 if result == .5 else 0)
+        goal_diff = int(game.home_score - game.away_score)
+        ta.gd.append(goal_diff); tb.gd.append(-goal_diff)
+
+    def apply_sequential(self, games: pd.DataFrame) -> None:
+        for game in games.itertuples(index=False):
+            self.apply_single(game)
+
     def apply_day(self, games: pd.DataFrame) -> None:
         """Calcula todos os deltas com estado ANTERIOR ao dia e depois aplica.
 
@@ -168,24 +204,26 @@ class RealMatchState:
             self.teams[team].elo += delta
 
 
-def generate_training_data(matches: pd.DataFrame, from_date: str = "2006-01-01") -> pd.DataFrame:
-    """Cria exemplos com atributos ANTES da partida e classe observada.
+def generate_training_data(matches: pd.DataFrame, from_date: str = "1872-11-30") -> pd.DataFrame:
+    """Reconstrói a base do TCC: histórico COMPLETO, cronologia jogo a jogo.
 
-    O Elo é aquecido usando jogos anteriores a 2006. Datas sem horário usam
-    o mesmo estado pré-dia. Nunca utiliza os placares do próprio confronto
-    nem de jogos futuros ao gerar seus atributos.
+    Mantém a mesma ordem do algoritmo original do autor, inclusive os jogos
+    na mesma data (sem horário); usa apenas o placar de partidas anteriores
+    na ordem estável do CSV. Para a Copa, a avaliação é feita por dia para
+    evitar utilizar resultados de jogos futuros.
     """
     start = pd.Timestamp(from_date)
     state = RealMatchState()
     examples = []
-    for day, group in matches.groupby("date", sort=True):
-        if day >= start:
-            for game in group.itertuples(index=False):
-                if pd.isna(game.home_score):
-                    continue
-                x = state.feature_row(game.home_team, game.away_team, game.tournament, game.neutral)
-                result = 1 if game.home_score > game.away_score else (2 if game.home_score < game.away_score else 0)
-                examples.append({"date": day.date().isoformat(), "Time_A": game.home_team, "Time_B": game.away_team,
-                                 **x, "Resultado": result})
-        state.apply_day(group)
-    return pd.DataFrame(examples, columns=["date", "Time_A", "Time_B", *FEATURES, "Resultado"])
+    for game in matches.itertuples(index=False):
+        if pd.notna(game.home_score) and game.date >= start:
+            features = state.feature_row(game.home_team, game.away_team, game.tournament, game.neutral)
+            result = 1 if game.home_score > game.away_score else (2 if game.home_score < game.away_score else 0)
+            examples.append({"date": game.date.strftime('%Y-%m-%d'),
+                             "Time_A": game.home_team, "Time_B": game.away_team,
+                             "Competicao": game.tournament, **features, "Resultado": result})
+        state.apply_single(game)
+    df = pd.DataFrame(examples, columns=["date", "Time_A", "Time_B", "Peso_Jogo",
+                                           "Competicao", *FEATURES[1:], "Resultado"])
+    df.insert(0, "Jogo_ID", range(1, len(df) + 1))
+    return df

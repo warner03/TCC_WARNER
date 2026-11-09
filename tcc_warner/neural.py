@@ -63,6 +63,7 @@ def train_model(dataset: str | Path, output_dir: str | Path, epochs: int = 40, s
                "data_inicio_teste": str(test.date.min().date()),
                "acuracia_teste": float(accuracy_score(target, probs.argmax(axis=1))),
                "log_loss_teste": float(log_loss(target, probs, labels=[0, 1, 2])),
+               "brier_multiclasse_teste": float(np.mean(np.sum((probs - np.eye(3)[target]) ** 2, axis=1))),
                "nota": "Class weights podem reduzir a calibração das probabilidades; avaliar antes de interpretar como frequências reais."}
     output = Path(output_dir); output.mkdir(parents=True, exist_ok=True)
     model.save(output / "modelo_tcc_warner.keras")

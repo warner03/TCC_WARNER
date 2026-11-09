@@ -1,2 +1,1 @@
-"""Modelos e avaliação cronológica do TCC de previsão de futebol."""
-__version__ = "0.1.0"
+"""Projeto científico: MC × RNA, 1872–2026; aplicação nos 104 jogos da Copa 2026."""

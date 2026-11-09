@@ -7,3 +7,6 @@ outputs/
 *.joblib
 *.pkl
 .DS_Store
+
+# Cópia local descompactada (a versão versionada é .csv.gz)
+/data/base_de_dadosTCC.csv

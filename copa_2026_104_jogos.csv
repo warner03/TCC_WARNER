@@ -1,0 +1,105 @@
+match_id,date,fase,grupo,home_slot,away_slot,Campo_Neutro
+1,2026-06-11,grupos,A,Mexico,South Africa,0
+2,2026-06-11,grupos,A,South Korea,Czech Republic,1
+3,2026-06-12,grupos,B,Canada,Bosnia and Herzegovina,0
+4,2026-06-12,grupos,D,United States,Paraguay,0
+5,2026-06-13,grupos,C,Haiti,Scotland,1
+6,2026-06-13,grupos,D,Australia,Turkey,1
+7,2026-06-13,grupos,C,Brazil,Morocco,1
+8,2026-06-13,grupos,B,Qatar,Switzerland,1
+9,2026-06-14,grupos,E,Ivory Coast,Ecuador,1
+10,2026-06-14,grupos,E,Germany,Curaçao,1
+11,2026-06-14,grupos,F,Netherlands,Japan,1
+12,2026-06-14,grupos,F,Sweden,Tunisia,1
+13,2026-06-15,grupos,H,Saudi Arabia,Uruguay,1
+14,2026-06-15,grupos,H,Spain,Cape Verde,1
+15,2026-06-15,grupos,G,Iran,New Zealand,1
+16,2026-06-15,grupos,G,Belgium,Egypt,1
+17,2026-06-16,grupos,I,France,Senegal,1
+18,2026-06-16,grupos,I,Iraq,Norway,1
+19,2026-06-16,grupos,J,Argentina,Algeria,1
+20,2026-06-16,grupos,J,Austria,Jordan,1
+21,2026-06-17,grupos,L,Ghana,Panama,1
+22,2026-06-17,grupos,L,England,Croatia,1
+23,2026-06-17,grupos,K,Portugal,DR Congo,1
+24,2026-06-17,grupos,K,Uzbekistan,Colombia,1
+25,2026-06-18,grupos,A,Czech Republic,South Africa,1
+26,2026-06-18,grupos,B,Switzerland,Bosnia and Herzegovina,1
+27,2026-06-18,grupos,B,Canada,Qatar,0
+28,2026-06-18,grupos,A,Mexico,South Korea,0
+29,2026-06-19,grupos,C,Brazil,Haiti,1
+30,2026-06-19,grupos,C,Scotland,Morocco,1
+31,2026-06-19,grupos,D,Turkey,Paraguay,1
+32,2026-06-19,grupos,D,United States,Australia,0
+33,2026-06-20,grupos,E,Germany,Ivory Coast,1
+34,2026-06-20,grupos,E,Ecuador,Curaçao,1
+35,2026-06-20,grupos,F,Netherlands,Sweden,1
+36,2026-06-20,grupos,F,Tunisia,Japan,1
+37,2026-06-21,grupos,H,Uruguay,Cape Verde,1
+38,2026-06-21,grupos,H,Spain,Saudi Arabia,1
+39,2026-06-21,grupos,G,Belgium,Iran,1
+40,2026-06-21,grupos,G,New Zealand,Egypt,1
+41,2026-06-22,grupos,I,Norway,Senegal,1
+42,2026-06-22,grupos,I,France,Iraq,1
+43,2026-06-22,grupos,J,Argentina,Austria,1
+44,2026-06-22,grupos,J,Jordan,Algeria,1
+45,2026-06-23,grupos,L,England,Ghana,1
+46,2026-06-23,grupos,L,Panama,Croatia,1
+47,2026-06-23,grupos,K,Portugal,Uzbekistan,1
+48,2026-06-23,grupos,K,Colombia,DR Congo,1
+49,2026-06-24,grupos,C,Scotland,Brazil,1
+50,2026-06-24,grupos,C,Morocco,Haiti,1
+51,2026-06-24,grupos,B,Canada,Switzerland,0
+52,2026-06-24,grupos,B,Bosnia and Herzegovina,Qatar,1
+53,2026-06-24,grupos,A,Mexico,Czech Republic,0
+54,2026-06-24,grupos,A,South Africa,South Korea,1
+55,2026-06-25,grupos,E,Curaçao,Ivory Coast,1
+56,2026-06-25,grupos,E,Ecuador,Germany,1
+57,2026-06-25,grupos,F,Japan,Sweden,1
+58,2026-06-25,grupos,F,Tunisia,Netherlands,1
+59,2026-06-25,grupos,D,United States,Turkey,0
+60,2026-06-25,grupos,D,Paraguay,Australia,1
+61,2026-06-26,grupos,I,Norway,France,1
+62,2026-06-26,grupos,I,Senegal,Iraq,1
+63,2026-06-26,grupos,G,Egypt,Iran,1
+64,2026-06-26,grupos,G,New Zealand,Belgium,1
+65,2026-06-26,grupos,H,Cape Verde,Saudi Arabia,1
+66,2026-06-26,grupos,H,Uruguay,Spain,1
+67,2026-06-27,grupos,L,Panama,England,1
+68,2026-06-27,grupos,L,Croatia,Ghana,1
+69,2026-06-27,grupos,J,Algeria,Austria,1
+70,2026-06-27,grupos,J,Jordan,Argentina,1
+71,2026-06-27,grupos,K,Colombia,Portugal,1
+72,2026-06-27,grupos,K,DR Congo,Uzbekistan,1
+73,2026-06-28,16avos,,2A,2B,1
+74,2026-06-29,16avos,,1E,T1E,1
+75,2026-06-29,16avos,,1F,2C,1
+76,2026-06-29,16avos,,1C,2F,1
+77,2026-06-30,16avos,,1I,T1I,1
+78,2026-06-30,16avos,,2E,2I,1
+79,2026-06-30,16avos,,1A,T1A,1
+80,2026-07-01,16avos,,1L,T1L,1
+81,2026-07-01,16avos,,1D,T1D,1
+82,2026-07-01,16avos,,1G,T1G,1
+83,2026-07-02,16avos,,2K,2L,1
+84,2026-07-02,16avos,,1H,2J,1
+85,2026-07-02,16avos,,1B,T1B,1
+86,2026-07-03,16avos,,1J,2H,1
+87,2026-07-03,16avos,,1K,T1K,1
+88,2026-07-03,16avos,,2D,2G,1
+89,2026-07-04,oitavas,,W74,W77,1
+90,2026-07-04,oitavas,,W73,W75,1
+91,2026-07-05,oitavas,,W76,W78,1
+92,2026-07-05,oitavas,,W79,W80,1
+93,2026-07-06,oitavas,,W83,W84,1
+94,2026-07-06,oitavas,,W81,W82,1
+95,2026-07-07,oitavas,,W86,W88,1
+96,2026-07-07,oitavas,,W85,W87,1
+97,2026-07-09,quartas,,W89,W90,1
+98,2026-07-10,quartas,,W93,W94,1
+99,2026-07-11,quartas,,W91,W92,1
+100,2026-07-11,quartas,,W95,W96,1
+101,2026-07-14,semifinais,,W97,W98,1
+102,2026-07-15,semifinais,,W99,W100,1
+103,2026-07-18,terceiro_lugar,,L101,L102,1
+104,2026-07-19,final,,W101,W102,1
